@@ -573,7 +573,7 @@
 	};
 
 	gcc: qcom,gcc@1800000 {
-		compatible = "qcom,gcc-msm8937", "syscon";
+		// compatible = "qcom,gcc-msm8937", "syscon"; Require later write fixup for msm8937 clk
 		reg = <0x1800000 0x80000>,
 			 <0x00a6018 0x00004>;
 		reg-names = "cc_base", "gpu-bin";
@@ -586,7 +586,7 @@
 	};
 
 	debugcc: qcom,cc-debug {
-		compatible = "qcom,msm8937-debugcc";
+		compatible = "qcom,qm215-debugcc";
 		reg = <0x1874000 0x4>,
 			<0xb11101c 0x8>;
 		reg-names = "cc_base", "meas";
@@ -597,7 +597,7 @@
 	};
 
 	gcc_mdss: qcom,gcc-mdss@1800000 {
-		compatible = "qcom,gcc-mdss-msm8937";
+		compatible = "qcom,gcc-mdss-sdm439";
 		reg = <0x1800000 0x80000>;
 		 clocks = <&mdss_dsi0_pll PCLK_SRC_0_CLK>,
 		 <&mdss_dsi0_pll BYTECLK_SRC_0_CLK>,
