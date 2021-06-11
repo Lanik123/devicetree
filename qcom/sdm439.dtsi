@@ -233,7 +233,7 @@
 	};
 };
 
-&clock_cpu {
+&apsscc {
 	compatible = "qcom,cpu-clock-sdm439";
 	vdd-c0-supply = <&apc_vreg_corner>;
 	vdd-c1-supply = <&apc_vreg_corner>;
