@@ -2171,7 +2171,7 @@
 		qcom,is-pronto-v3;
 		qcom,has-pronto-hw;
 		qcom,has-vsys-adc-channel;
-		qcom,wcnss-adc_tm = <&pm8937_adc_tm>;
+		//qcom,wcnss-adc_tm = <&pm8937_adc_tm>;
 	};
 
 	bam_dmux: qcom,bam_dmux@4044000 {
