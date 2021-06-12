@@ -205,6 +205,7 @@
 
 };
 
+/* Maybe in the future one hero will be write good gcc for msm8940
 &gcc {
 	compatible = "qcom,gcc-8940";
 };
@@ -216,6 +217,7 @@
 &gcc_mdss {
 	compatible = "qcom,gcc-mdss-8940";
 };
+*/
 
 &bam_dmux {
 	status = "disabled";
