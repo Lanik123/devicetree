@@ -408,19 +408,21 @@
 };
 
 /* GPU Overrides*/
-&gpubw {
-	/delete-property/qcom,bw-tbl;
-	qcom,bw-tbl =
-		< 0    >, /*  off */
-		<  769 >, /* 1. DDR:100.80 MHz BIMC: 50.40 MHz */
-		< 1611 >, /* 2. DDR:211.20 MHz BIMC: 105.60 MHz */
-		< 2273 >, /* 3. DDR:297.60 MHz BIMC: 148.80 MHz */
-		< 2929 >, /* 4. DDR:384.00 MHz BIMC: 192.00 MHz */
-		< 4248 >, /* 5. DDR:556.80 MHz BIMC: 278.40 MHz */
-		< 5346 >, /* 6. DDR:662.40 MHz BIMC: 331.20 MHz */
-		< 5712 >, /* 7. DDR:748.80 MHz BIMC: 374.40 MHz */
-		< 6150 >, /* 8. DDR:796.80 MHz BIMC: 398.40 MHz */
-		< 7105 >; /* 9. DDR:931.20 MHz BIMC: 465.60 MHz */
+&soc {
+	/delete-node/ gpu_bw_tbl;
+	gpu_bw_tbl: gpu-bw-tbl {
+			compatible = "operating-points-v2";
+			opp-0    { opp-hz = /bits/ 64 < 0 >;     }; /* OFF */
+			opp-201  { opp-hz = /bits/ 64 < 769 >;   }; /*  1. 201  MHz */
+			opp-422  { opp-hz = /bits/ 64 < 1611 >;  }; /*  2. 422  MHz */
+			opp-595  { opp-hz = /bits/ 64 < 2273 >;  }; /*  3. 595  MHz */
+			opp-768  { opp-hz = /bits/ 64 < 2929 >;  }; /*  4. 768  MHz */
+			opp-1113 { opp-hz = /bits/ 64 < 4248 >;  }; /*  6. 1113 MHz */
+			opp-1401 { opp-hz = /bits/ 64 < 5346 >;  }; /*  7. 1401 MHz */
+			opp-1497 { opp-hz = /bits/ 64 < 5712 >;  }; /*  8. 1497 MHz */
+			opp-1613 { opp-hz = /bits/ 64 < 6150 >;  }; /*  9. 1613 MHz */
+			opp-1864 { opp-hz = /bits/ 64 < 7105 >;  }; /* 10. 1864 MHz */
+	};
 };
 
 &msm_gpu {
