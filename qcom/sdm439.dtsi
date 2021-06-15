@@ -227,6 +227,7 @@
 		compatible = "qcom,smmu-kgsl-cb";
 		iommus = <&kgsl_smmu 2>;
 		memory-region = <&secure_mem>;
+		qcom,iommu-dma = "disabled";
 	};
 };
 
