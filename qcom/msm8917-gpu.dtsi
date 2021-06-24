@@ -166,6 +166,7 @@
 		 * The gpu can only program a single context bank
 		 * at this fixed offset.
 		 */
+		qcom,protect = <0xa000 0x1000>;
 		clocks = <&gcc GCC_SMMU_CFG_CLK>,
 			<&gcc GCC_GFX_TCU_CLK>,
 			<&gcc GCC_GTCU_AHB_CLK>,
