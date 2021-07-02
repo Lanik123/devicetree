@@ -1,0 +1,27 @@
+#include "msm8937-sde.dtsi" 
+&mdss_mdp {
+    qcom,sde-max-per-pipe-bw-kbps = <1000000>;
+	qcom,sde-max-bw-low-kbps = <1800000>;
+	qcom,sde-max-bw-high-kbps = <1800000>;
+
+	qcom,sde-intf-off = <0x00000 0x6b800>;
+	//qcom,sde-intf-size = <0x260>;
+	qcom,sde-intf-type = "none", "dsi";
+
+	qcom,sde-pp-off = <0x71000>;
+	//qcom,sde-pp-size = <0xc8>;
+
+	qcom,sde-mixer-off = <0x45000>;
+	//qcom,sde-mixer-size = <0x3c0>;
+	qcom,sde-mixer-display-pref = "primary";
+
+	qcom,sde-danger-lut = <0x000f 0x0 0x0>;
+	qcom,sde-safe-lut-linear = <0 0xfffc>;
+	qcom,sde-safe-lut-macrotile = <0 0x0>;
+	qcom,sde-safe-lut-nrt = <0 0x0>;
+
+	/delete-property/ qcom,sde-highest-bank-bit;
+};
+
+/delete-node/ &sde_dsi1;
+/delete-node/ &sde_dsi_phy1;

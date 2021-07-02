@@ -1,0 +1,534 @@
+&soc {
+	mdss_mdp: qcom,mdss_mdp {
+		compatible = "qcom,sde-kms";
+		reg = <0x01a00000 0x90000>,
+		      <0x01ab0000 0x1040>;
+		reg-names = "mdp_phys", "vbif_phys";
+
+		/* clock and supply entries */
+		clocks = <&gcc GCC_MDSS_AHB_CLK>,
+			 <&gcc GCC_MDSS_AXI_CLK>,
+			 <&gcc MDP_CLK_SRC>,
+			 <&gcc_mdss MDSS_MDP_VOTE_CLK>,
+			 <&gcc GCC_MDSS_VSYNC_CLK>,
+			 <&gcc_mdss MDSS_ROTATOR_VOTE_CLK>;
+		clock-names = "iface_clk",
+			"bus_clk",
+			"core_clk_src",
+			"core_clk",
+			"vsync_clk",
+			"rot_clk";
+		clock-rate = <0 0 160000000 160000000 0 0>;
+		clock-max-rate = <0 0 320000000 320000000 0 0>;
+
+		/* interrupt config */
+		interrupts = <0 72 IRQ_TYPE_LEVEL_HIGH>;
+		interrupt-controller;
+		#interrupt-cells = <1>;
+
+		#power-domain-cells = <0>;
+
+		/* hw blocks */
+		qcom,sde-off = <0x1000>;
+		qcom,sde-len = <0x450>;
+		qcom,sde-ctl-off = <0x2000 0x2200 0x2400>;
+		//qcom,sde-ctl-size = <0x60>;
+		qcom,sde-ctl-display-pref = "primary", "secondary", "none";
+
+		qcom,sde-mixer-off = <0x45000 0x46000>;
+		//qcom,sde-mixer-size = <0x3c0>;
+		qcom,sde-mixer-display-pref = "primary", "secondary";
+
+		qcom,sde-dspp-off = <0x55000>;
+		//qcom,sde-dspp-size = <0x5522c>;
+
+		//qcom,sde-dspp-ad-off = <0x24000 0x22800>;
+		//qcom,sde-dspp-ad-version = <0x00030000>;
+
+		qcom,sde-wb-off = <0x65000 0x66000>;
+		//qcom,sde-wb-size = <0x2c0>;
+		qcom,sde-wb-id = <2>;
+		qcom,sde-wb-xin-id = <6>;
+		qcom,sde-wb-clk-ctrl = <0x2bc 16>;
+
+		qcom,sde-intf-off = <0x00000 0x6b000 0x6c000>;
+		//qcom,sde-intf-size = <0x260>;
+		qcom,sde-intf-type = "none", "dsi", "dsi";
+
+		qcom,sde-pp-off = <0x71000 0x71800>;
+		//qcom,sde-pp-size = <0xc8>;
+
+		//qcom,sde-te2-off = <0x2000 0x2000 0x0 0x0 0x0>;
+		qcom,sde-cdm-off = <0x7a200>;
+		//qcom,sde-cdm-size = <0x200>;
+
+		qcom,sde-sspp-type = "vig", "rgb", "rgb",
+				      "dma", "cursor";
+
+		qcom,sde-sspp-off = <0x5000 0x15000 0x17000
+				      0x25000 0x35000>;
+		//qcom,sde-sspp-src-size = <0x138>;
+
+		qcom,sde-sspp-xin-id = <0 1 5 2 7>;
+
+		/* offsets are relative to "mdp_phys + qcom,sde-off */
+		qcom,sde-sspp-clk-ctrl = <0x2ac 0>, <0x2ac 4>, <0x2b4 4>,
+								 <0x2ac 8>, <0x3a8 16>;
+		qcom,sde-qseed-type = "qseedv2";
+		qcom,sde-csc-type = "csc";
+		qcom,sde-mixer-linewidth = <2048>;
+		qcom,sde-sspp-linewidth = <2048>;
+		qcom,sde-wb-linewidth = <4096>;
+		//qcom,sde-mixer-blendstages = <0x7>;
+		qcom,sde-highest-bank-bit = <0x1>;
+		qcom,sde-panic-per-pipe;
+		qcom,sde-has-idle-pc;
+		qcom,sde-max-per-pipe-bw-kbps = <2300000>;
+		qcom,sde-max-bw-low-kbps = <3100000>;
+		qcom,sde-max-bw-high-kbps = <3100000>;
+		qcom,sde-min-core-ib-kbps = <2400000>;
+		qcom,sde-min-llcc-ib-kbps = <800000>;
+		qcom,sde-min-dram-ib-kbps = <800000>;
+		qcom,sde-dram-channels = <2>;
+		qcom,sde-num-nrt-paths = <1>;
+
+		/* VBIF QoS remapper settings*/
+		qcom,sde-vbif-qos-rt-remap = <1 2 2 2>;
+		qcom,sde-vbif-qos-nrt-remap = <1 1 1 1>;
+
+		qcom,sde-danger-lut = <0x000f 0xffff 0x0000>;
+		qcom,sde-safe-lut-linear = <0 0xfffc>;
+		qcom,sde-safe-lut-macrotile = <0 0xff00>;
+		qcom,sde-safe-lut-nrt = <0 0xffff>;
+
+		qcom,sde-vbif-off = <0 0>;
+		qcom,sde-vbif-size = <0x1040>;
+		qcom,sde-vbif-id = <0 1>;
+		qcom,sde-vbif-default-ot-rd-limit = <32>;
+		qcom,sde-vbif-default-ot-wr-limit = <16>;
+		qcom,sde-vbif-dynamic-ot-rd-limit = <62208000 2>,
+			<124416000 4>, <248832000 16>;
+		qcom,sde-vbif-dynamic-ot-wr-limit = <62208000 2>,
+			<124416000 4>, <248832000 16>;
+
+		vdd-supply = <&gdsc_mdss>;
+
+		qcom,sde-sspp-vig-blocks {
+			qcom,sde-vig-csc-off = <0x320>;
+			qcom,sde-vig-qseed-off = <0x200>;
+			/* Offset from vig top, version of HSIC */
+			qcom,sde-vig-hsic = <0x200 0x00010007>;
+			qcom,sde-vig-memcolor = <0x200 0x00010007>;
+			qcom,sde-vig-pcc = <0x1780 0x00010007>;
+		};
+
+		qcom,sde-sspp-rgb-blocks {
+			qcom,sde-rgb-pcc = <0x380 0x00010007>;
+		};
+
+		qcom,sde-dspp-blocks {
+			qcom,sde-dspp-pcc = <0x1700 0x00010007>;
+			qcom,sde-dspp-gc = <0x17c0 0x00010007>;
+			qcom,sde-dspp-hsic = <0x0 0x00010007>;
+			qcom,sde-dspp-memcolor = <0x0 0x00010007>;
+			qcom,sde-dspp-sixzone = <0x0 0x00010007>;
+			qcom,sde-dspp-gamut = <0x1600 0x00010007>;
+			qcom,sde-dspp-dither = <0x0 0x00010007>;
+			qcom,sde-dspp-hist = <0x0 0x00010007>;
+			qcom,sde-dspp-vlut = <0x0 0x00010007>;
+		};
+
+		qcom,sde-mixer-blocks {
+			qcom,sde-mixer-gc = <0x3c0 0x00010007>;
+		};
+
+		qcom,platform-supply-entries {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			qcom,platform-supply-entry@0 {
+				reg = <0>;
+				qcom,supply-name = "vdd";
+				qcom,supply-min-voltage = <0>;
+				qcom,supply-max-voltage = <0>;
+				qcom,supply-enable-load = <0>;
+				qcom,supply-disable-load = <0>;
+			};
+		};
+
+		smmu_sde_unsec: qcom,smmu_sde_unsec_cb {
+			compatible = "qcom,smmu_sde_unsec";
+			iommus = <&apps_iommu 0x2800 0x0>; /* For NS ctx bank */
+			qcom,iommu-dma-addr-pool = <0x08000000 0xF8000000>;
+			qcom,iommu-faults = "non-fatal";
+			qcom,iommu-earlymap; /* for cont-splash */
+		};
+
+		smmu_sde_sec: qcom,smmu_sde_sec_cb {
+			compatible = "qcom,smmu_sde_sec";
+			iommus = <&apps_iommu 0x2801 0x0>; /* For SEC Ctx Bank */
+			qcom,iommu-dma-addr-pool = <0x08000000 0xF8000000>;
+			qcom,iommu-faults = "non-fatal";
+			qcom,secure-context-bank;
+			qcom,iommu-vmid = <0x11>; /*VMID_CP_SEC_DISPLAY*/
+		};
+
+		/* data and reg bus scale settings */
+		qcom,sde-data-bus {
+			qcom,msm-bus,name = "mdss_sde";
+			qcom,msm-bus,num-cases = <3>;
+			qcom,msm-bus,num-paths = <1>;
+			qcom,msm-bus,vectors-KBps =
+				<22 512 0 0>,
+				<22 512 0 6400000>,
+				<22 512 0 6400000>;
+		};
+
+		qcom,sde-reg-bus {
+			qcom,msm-bus,name = "mdss_reg";
+			qcom,msm-bus,num-cases = <4>;
+			qcom,msm-bus,num-paths = <1>;
+			qcom,msm-bus,active-only;
+			qcom,msm-bus,vectors-KBps =
+				<1 590 0 0>,
+				<1 590 0 76800>,
+				<1 590 0 160000>,
+				<1 590 0 320000>;
+		};
+	};
+
+	sde_dsi0: qcom,sde_dsi_ctrl0 {
+		compatible = "qcom,dsi-ctrl-hw-v1.4";
+		label = "dsi-ctrl-0";
+		cell-index = <0>;
+		reg =   <0x1a94000 0x300>,
+			<0x193e000 0x30>;
+		reg-names = "dsi_ctrl", "mmss_misc";
+
+		gdsc-supply = <&gdsc_mdss>;
+		vdda-supply = <&pm8937_l2>;
+		vddio-supply = <&pm8937_l6>;
+
+		clocks = <&gcc_mdss MDSS_MDP_VOTE_CLK>,
+			<&gcc GCC_MDSS_AHB_CLK>,
+			<&gcc GCC_MDSS_AXI_CLK>,
+			<&gcc_mdss GCC_MDSS_BYTE0_CLK>,
+			<&gcc_mdss GCC_MDSS_PCLK0_CLK>,
+			<&gcc GCC_MDSS_ESC0_CLK>,
+			<&gcc_mdss BYTE0_CLK_SRC>,
+			<&gcc_mdss PCLK0_CLK_SRC>;
+
+		clock-names = "mdp_core_clk", "iface_clk",
+			"bus_clk", "byte_clk", 
+			"pixel_clk", "esc_clk",
+			"byte_clk_rcg", "pixel_clk_rcg";
+
+		/* axi bus scale settings */
+		qcom,msm-bus,name = "mdss_dsi0";
+		qcom,msm-bus,num-cases = <2>;
+		qcom,msm-bus,num-paths = <1>;
+		qcom,msm-bus,vectors-KBps =
+			<22 512 0 0>,
+			<22 512 0 1000>;
+
+		interrupt-parent = <&mdss_mdp>;
+		interrupts = <4 0>;
+		qcom,core-supply-entries {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			qcom,core-supply-entry@0 {
+				reg = <0>;
+				qcom,supply-name = "gdsc";
+				qcom,supply-min-voltage = <0>;
+				qcom,supply-max-voltage = <0>;
+				qcom,supply-enable-load = <0>;
+				qcom,supply-disable-load = <0>;
+			};
+		};
+
+		qcom,ctrl-supply-entries {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			qcom,ctrl-supply-entry@0 {
+				reg = <0>;
+				qcom,supply-name = "vdda";
+				qcom,supply-min-voltage = <1200000>;
+				qcom,supply-max-voltage = <1200000>;
+				qcom,supply-enable-load = <100000>;
+				qcom,supply-disable-load = <100>;
+				qcom,supply-post-on-sleep = <20>;
+			};
+
+			qcom,ctrl-supply-entry@1 {
+				reg = <0>;
+				qcom,supply-name = "vddio";
+				qcom,supply-min-voltage = <1800000>;
+				qcom,supply-max-voltage = <1800000>;
+				qcom,supply-enable-load = <100000>;
+				qcom,supply-disable-load = <100>;
+			};
+
+		};
+	};
+
+	sde_dsi_phy0: qcom,sde_dsi_phy0 {
+		compatible = "qcom,dsi-phy-v4.0";
+		label = "dsi-phy-0";
+		cell-index = <0>;
+		reg = <0x1a94400 0x280>;
+		reg-names = "dsi_phy";
+
+		gdsc-supply = <&gdsc_mdss>;
+		vdda-supply = <&pm8937_l2>;
+
+		clocks = <&gcc_mdss MDSS_MDP_VOTE_CLK>,
+			<&gcc GCC_MDSS_AHB_CLK>,
+			<&gcc GCC_MDSS_AXI_CLK>;
+		clock-names = "mdp_core_clk", "iface_clk",
+			"bus_clk";
+
+		qcom,platform-strength-ctrl = [ff 06];
+		qcom,platform-bist-ctrl = [00 00 b1 ff 00 00];
+		qcom,platform-regulator-settings = [03 08 07 00
+			20 07 01];
+		qcom,platform-lane-config = [01 c0 00 00 00 00 00 01 97
+			01 c0 00 00 05 00 00 01 97
+			01 c0 00 00 0a 00 00 01 97
+			01 c0 00 00 0f 00 00 01 97
+			00 40 00 00 00 00 00 01 ff];
+
+		qcom,core-supply-entries {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			qcom,core-supply-entry@0 {
+				reg = <0>;
+				qcom,supply-name = "gdsc";
+				qcom,supply-min-voltage = <0>;
+				qcom,supply-max-voltage = <0>;
+				qcom,supply-enable-load = <0>;
+				qcom,supply-disable-load = <0>;
+			};
+		};
+
+		qcom,phy-supply-entries {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			qcom,phy-supply-entry@0 {
+				reg = <0>;
+				qcom,supply-name = "vdda";
+				qcom,supply-min-voltage = <1250000>;
+				qcom,supply-max-voltage = <1250000>;
+				qcom,supply-enable-load = <2500>;
+				qcom,supply-disable-load = <1>;
+			};
+		};
+	};
+
+	sde_dsi1: qcom,sde_dsi_ctrl1 {
+		compatible = "qcom,dsi-ctrl-hw-v1.4";
+		label = "dsi-ctrl-1";
+		cell-index = <1>;
+		reg =   <0x1a96000 0x300>,
+			<0x193e000 0x30>;
+		reg-names = "dsi_ctrl", "mmss_misc";
+
+		gdsc-supply = <&gdsc_mdss>;
+		vdda-supply = <&pm8937_l2>;
+		vddio-supply = <&pm8937_l6>;
+
+		clocks = <&gcc_mdss MDSS_MDP_VOTE_CLK>,
+			<&gcc GCC_MDSS_AHB_CLK>,
+			<&gcc GCC_MDSS_AXI_CLK>,
+			<&gcc_mdss GCC_MDSS_BYTE1_CLK>,
+			<&gcc_mdss GCC_MDSS_PCLK1_CLK>,
+			<&gcc GCC_MDSS_ESC1_CLK>,
+			<&gcc_mdss BYTE1_CLK_SRC>,
+			<&gcc_mdss PCLK1_CLK_SRC>;
+
+		clock-names = "mdp_core_clk", "iface_clk",
+			"bus_clk", "byte_clk", 
+			"pixel_clk", "esc_clk",
+			"byte_clk_rcg", "pixel_clk_rcg";
+
+		/* axi bus scale settings */
+		qcom,msm-bus,name = "mdss_dsi1";
+		qcom,msm-bus,num-cases = <2>;
+		qcom,msm-bus,num-paths = <1>;
+		qcom,msm-bus,vectors-KBps =
+			<22 512 0 0>,
+			<22 512 0 1000>;
+
+		interrupt-parent = <&mdss_mdp>;
+		interrupts = <5 0>;
+		qcom,core-supply-entries {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			qcom,core-supply-entry@0 {
+				reg = <0>;
+				qcom,supply-name = "gdsc";
+				qcom,supply-min-voltage = <0>;
+				qcom,supply-max-voltage = <0>;
+				qcom,supply-enable-load = <0>;
+				qcom,supply-disable-load = <0>;
+			};
+		};
+
+		qcom,ctrl-supply-entries {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			qcom,ctrl-supply-entry@0 {
+				reg = <0>;
+				qcom,supply-name = "vdda";
+				qcom,supply-min-voltage = <1200000>;
+				qcom,supply-max-voltage = <1200000>;
+				qcom,supply-enable-load = <100000>;
+				qcom,supply-disable-load = <100>;
+				qcom,supply-post-on-sleep = <20>;
+			};
+
+			qcom,ctrl-supply-entry@1 {
+				reg = <0>;
+				qcom,supply-name = "vddio";
+				qcom,supply-min-voltage = <1800000>;
+				qcom,supply-max-voltage = <1800000>;
+				qcom,supply-enable-load = <100000>;
+				qcom,supply-disable-load = <100>;
+			};
+
+		};
+	};
+
+	sde_dsi_phy1: qcom,sde_dsi_phy1 {
+		compatible = "qcom,dsi-phy-v4.0";
+		label = "dsi-phy-1";
+		cell-index = <1>;
+		reg = <0x1a96400 0x280>;
+		reg-names = "dsi_phy";
+
+		gdsc-supply = <&gdsc_mdss>;
+		vdda-supply = <&pm8937_l2>;
+
+		clocks = <&gcc_mdss MDSS_MDP_VOTE_CLK>,
+			<&gcc GCC_MDSS_AHB_CLK>,
+			<&gcc GCC_MDSS_AXI_CLK>;
+		clock-names = "mdp_core_clk", "iface_clk",
+			"bus_clk";
+
+		qcom,platform-strength-ctrl = [ff 06];
+		qcom,platform-bist-ctrl = [00 00 b1 ff 00 00];
+		qcom,platform-regulator-settings = [03 08 07 00
+			20 07 01];
+		qcom,platform-lane-config = [01 c0 00 00 00 00 00 01 97
+			01 c0 00 00 05 00 00 01 97
+			01 c0 00 00 0a 00 00 01 97
+			01 c0 00 00 0f 00 00 01 97
+			00 40 00 00 00 00 00 01 ff];
+
+		qcom,core-supply-entries {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			qcom,core-supply-entry@0 {
+				reg = <0>;
+				qcom,supply-name = "gdsc";
+				qcom,supply-min-voltage = <0>;
+				qcom,supply-max-voltage = <0>;
+				qcom,supply-enable-load = <0>;
+				qcom,supply-disable-load = <0>;
+			};
+		};
+
+		qcom,phy-supply-entries {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			qcom,phy-supply-entry@0 {
+				reg = <0>;
+				qcom,supply-name = "vdda";
+				qcom,supply-min-voltage = <1250000>;
+				qcom,supply-max-voltage = <1250000>;
+				qcom,supply-enable-load = <2500>;
+				qcom,supply-disable-load = <1>;
+			};
+		};
+	};
+
+    mdss_rotator: qcom,mdss_rotator {
+		compatible = "qcom,sde_rotator";
+		reg = <0x1a00000 0x90000>,
+		      <0x01ab0000 0x1040>;
+		reg-names = "mdp_phys",
+			    "rot_vbif_phys";
+
+		#list-cells = <1>;
+
+		qcom,mdss-rot-mode = <1>;
+
+		/* Bus Scale Settings */
+		qcom,msm-bus,name = "mdss_rotator";
+		qcom,msm-bus,num-cases = <3>;
+		qcom,msm-bus,num-paths = <1>;
+		qcom,msm-bus,vectors-KBps =
+			<22 512 0 0>,
+			<22 512 0 6400000>,
+			<22 512 0 6400000>;
+
+		rot-vdd-supply = <&gdsc_mdss>;
+		qcom,supply-names = "rot-vdd";
+
+		clocks = <&gcc GCC_MDSS_AHB_CLK>,
+			<&gcc_mdss MDSS_ROTATOR_VOTE_CLK>;
+		clock-names = "iface_clk", "rot_clk";
+
+		interrupt-parent = <&mdss_mdp>;
+		interrupts = <2 0>;
+
+		power-domains = <&mdss_mdp>;
+		/*Offline rotator RT setting */
+		qcom,mdss-rot-parent = <&mdss_mdp 0>;
+		qcom,mdss-rot-xin-id = <10 11>;
+
+		/* Offline rotator QoS setting */
+		qcom,mdss-rot-vbif-qos-setting = <3 3 3 3 3 3 3 3>;
+		qcom,mdss-rot-cdp-setting = <1 1>;
+		qcom,mdss-rot-qos-lut = <0x0 0x0 0x0 0x0>;
+		qcom,mdss-rot-danger-lut = <0x0 0x0>;
+		qcom,mdss-rot-safe-lut = <0x0000ffff 0x0000ffff>;
+
+		qcom,mdss-default-ot-rd-limit = <32>;
+		qcom,mdss-default-ot-wr-limit = <32>;
+
+		qcom,mdss-sbuf-headroom = <20>;
+
+		/* reg bus scale settings */
+		rot_reg: qcom,rot-reg-bus {
+			qcom,msm-bus,name = "mdss_rot_reg";
+			qcom,msm-bus,num-cases = <2>;
+			qcom,msm-bus,num-paths = <1>;
+			qcom,msm-bus,vectors-KBps =
+				<1 590 0 0>,
+				<1 590 0 76800>;
+		};
+
+		smmu_rot_unsec: qcom,smmu_rot_unsec_cb {
+			compatible = "qcom,smmu_sde_rot_unsec";
+			iommus = <&apps_iommu 0x2900 0x0>;
+			qcom,iommu-dma-addr-pool = <0x08000000 0xF8000000>;
+			qcom,iommu-faults = "non-fatal";
+		};
+
+		smmu_rot_sec: qcom,smmu_rot_sec_cb {
+			compatible = "qcom,smmu_sde_rot_sec";
+			iommus = <&apps_iommu 0x2901 0x0>;
+			qcom,iommu-dma-addr-pool = <0x08000000 0xF8000000>;
+			qcom,iommu-faults = "non-fatal";
+			qcom,iommu-vmid = <0x11>; /*VMID_CP_SEC_DISPLAY*/
+		};
+	};
+};
