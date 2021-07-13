@@ -17,8 +17,9 @@
 		vdd-supply = <&gdsc_oxili_cx>;
 		qcom,regulator-names = "vdd";
 		clocks = <&gcc GCC_OXILI_AHB_CLK>,
-			     <&gcc GCC_BIMC_GFX_CLK>;
-		clock-names = "gpu_ahb_clk", "gcc_bimc_gfx_clk";
+			     <&gcc GCC_BIMC_GFX_CLK>,
+			     <&gcc GCC_BIMC_GPU_CLK>;
+		clock-names = "gcc_oxili_ahb_clk", "gcc_bimc_gfx_clk", "gcc_bimc_gpu_clk";
 	};
 
 	/* A test device to test the SMMU operation */

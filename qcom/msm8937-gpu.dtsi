@@ -230,9 +230,10 @@
 		reg = <0x1c40000 0x10000>;
 		qcom,protect = <0x40000 0x10000>;
 		clocks = <&gcc GCC_OXILI_AHB_CLK>,
-			 <&gcc GCC_BIMC_GFX_CLK>;
+			<&gcc GCC_BIMC_GFX_CLK>,
+			<&gcc GCC_BIMC_GPU_CLK>;
 
-		clock-names = "gpu_ahb_clk", "gcc_bimc_gfx_clk";
+		clock-names = "iface_clk", "mem_clk", "alt_mem_iface_clk";
 
 		qcom,secure_align_mask = <0xfff>;
 		qcom,retention;
