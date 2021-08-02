@@ -27,10 +27,6 @@
 	compatible = "qcom,gcc-qm215", "syscon";
 };
 
-&debugcc {
-	compatible = "qcom,qm215-debugcc";
-};
-
 &apsscc {
 	cpu-vdd-supply = <&apc_vreg_corner>;
 	vdd_dig_ao-supply = <&pm8916_s1_level_ao>;

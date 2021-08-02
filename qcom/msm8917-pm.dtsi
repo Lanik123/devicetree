@@ -85,7 +85,7 @@
 				qcom,pm-cpu-level@0 {
 					reg = <0>;
 					label = "wfi";
-					qcom,psci-cpu-mode = <0>;
+					qcom,psci-cpu-mode = <1>;
 					qcom,entry-latency-us = <13>;
 					qcom,exit-latency-us = <12>;
 					qcom,min-residency-us = <25>;

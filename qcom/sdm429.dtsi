@@ -31,6 +31,12 @@
 		};
 	};
 
+	/delete-node/ syscon@0b11101c;
+	cpu_debug: syscon@0b01101c {
+		compatible = "syscon";
+		reg = <0x0b01101c 0x4>;
+	};
+
 	/delete-node/ qcom,msm-cpufreq;
 	msm_cpufreq: qcom,msm-cpufreq {
 		compatible = "qcom,msm-cpufreq";
@@ -62,7 +68,7 @@
 			qcom,target-dev = <&cpu0_cpu_ddr_latfloor>;
 			qcom,core-dev-table =
 				< 1305600 MHZ_TO_MBPS(384, 8) >,
-				< 1804800 MHZ_TO_MBPS(557, 8) >;
+				< 1804800 MHZ_TO_MBPS(749, 8) >;
 		};
 	};
 
@@ -103,6 +109,11 @@
 
 &gcc {
 	vdd_cx-supply = <&pm8953_s2_level>;
+};
+
+&debugcc {
+	compatible = "qcom,sdm429-debugcc";
+	qcom,cpu = <&cpu_debug>;
 };
 
 &soc {
