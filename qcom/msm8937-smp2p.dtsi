@@ -1,37 +1,29 @@
-/* Copyright (c) 2015, 2018 The Linux Foundation. All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 and
- * only version 2 as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- */
+// SPDX-License-Identifier: GPL-2.0
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+
 &soc {
-	qcom,smp2p-modem@0xb011008 {
+	qcom,smp2p-modem@b011008 {
 		compatible = "qcom,smp2p";
 		reg = <0xb011008 0x4>;
 		qcom,remote-pid = <1>;
 		qcom,irq-bitmask = <0x4000>;
-		interrupts = <0 27 1>;
+		interrupts = <GIC_SPI 27 IRQ_TYPE_EDGE_RISING>;
 	};
 
-	qcom,smp2p-wcnss@0xb011008 {
+	qcom,smp2p-wcnss@b011008 {
 		compatible = "qcom,smp2p";
 		reg = <0xb011008 0x4>;
 		qcom,remote-pid = <4>;
 		qcom,irq-bitmask = <0x40000>;
-		interrupts = <0 143 1>;
+		interrupts = <GIC_SPI 143 IRQ_TYPE_EDGE_RISING>;
 	};
 
-	qcom,smp2p-adsp@0xb011008 {
+	qcom,smp2p-adsp@b011008 {
 		compatible = "qcom,smp2p";
 		reg = <0xb011008 0x4>;
 		qcom,remote-pid = <2>;
 		qcom,irq-bitmask = <0x400>;
-		interrupts = <0 291 1>;
+		interrupts = <GIC_SPI 291 IRQ_TYPE_EDGE_RISING>;
 	};
 
 	smp2pgpio_smp2p_15_in: qcom,smp2pgpio-smp2p-15-in {
